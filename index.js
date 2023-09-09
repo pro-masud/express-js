@@ -1,39 +1,52 @@
 const express = require("express");
 const colors = require("colors");
 const dotenv = require("dotenv").config();
-
+const path = require("path");
 // create a Port Number
 
 const PORT = process.env.PORT || 6060;
 
 const app = express();
 
-// get method outpur data main domain routeing
+// create public folder using 
+app.use(express.static("public"));
+
 app.get("/", (req, res) => {
-    res.send("This is a Home Page");
+    res.sendFile(path.join(__dirname, "public/index.html"));
 });
 
-// blog route
+app.get("/menu", (req, res) => {
+    res.sendFile(path.join(__dirname, "public/menu.html") );
+});
+
+app.get("/news", (req, res) => {
+    res.sendFile(path.join(__dirname, "public/news.html") );
+});
+
+app.get("/location", (req, res) => {
+    res.sendFile(path.join(__dirname, "public/location.html"));
+});
+
+app.get("/reservation", (req, res) => {
+    res.sendFile(path.join(__dirname, "public/reservation.html"));
+});
+
+app.get("/gallery", (req, res) => {
+    res.sendFile(path.join(__dirname, "public/gallery.html"));
+});
+
+app.get("/staff", (req, res) => {
+    res.sendFile(path.join(__dirname, "public/staff.html"));
+});
+
 app.get("/blog", (req, res) => {
-    res.send("This is a Blog Page");
+    res.sendFile(path.join(__dirname, "public/archive.html"));
 });
 
-// about route
-app.get("/about", (req, res) => {
-    res.send("This is a About Page");
-});
-
-
-// contact route
-app.get("/contact", (req, res) => {
-    res.send("This is a Contact Page");
-});
-
-
-// anything route for 404 page
 app.get("*", (req, res) => {
-    res.send("404 Page");
-});
+    res.sendFile(__dirname, "public/404.html");
+})
+
 
 app.listen(PORT, () => {
     console.log(`Server Is Running ${PORT} Port`.bgGreen.black);
